@@ -1,0 +1,75 @@
+/* RESET CƠ BẢN – GIỮ GIAO DIỆN KHÔNG BỊ LỆCH */
+* {
+  box-sizing: border-box;
+}
+
+/* THIẾT LẬP CHUNG CHO TOÀN WEB */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  background: #0f172a; /* MÀU NỀN CHÍNH */
+  color: #ffffff;      /* MÀU CHỮ */
+}
+
+/* KHUNG APP – GIỮ FULL MÀN HÌNH ĐIỆN THOẠI */
+.app {
+  min-height: 100vh;
+  padding:
+    env(safe-area-inset-top)
+    20px
+    env(safe-area-inset-bottom);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ICON APP */
+.logo {
+  width: 110px;        /* CHỈNH KÍCH THƯỚC ICON */
+  margin-top: 32px;
+  margin-bottom: 16px;
+}
+
+/* TIÊU ĐỀ TRANG */
+h1 {
+  font-size: 26px;      /* dòng trên */
+  font-weight: 700;
+  text-align: center;
+}
+
+.subtitle {
+  display: block;       /* xuống dòng */
+  font-size: 22px;      /* ← THU NHỎ CHỮ Ở ĐÂY */
+  font-weight: 500;     /* nhẹ hơn */
+  text-align: center;   /* căn giữa */
+  margin-top: 6px;      /* khoảng cách giữa 2 dòng */
+}
+
+/* NÚT BẤM CHÍNH */
+.btn {
+  width: 100%;
+  max-width: 360px;
+  padding: 18px;
+  margin-bottom: 18px;
+  font-size: 20px;
+  font-weight: 680;
+  text-align: center;
+  color: #0f172a;
+  background: #fbbf24; /* MÀU NÚT */
+  border-radius: 16px;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* HIỆU ỨNG KHI BẤM */
+.btn:active {
+  opacity: 0.85;
+}
+
+/* PHẦN CUỐI TRANG (VERSION / QUAY LẠI) */
+.footer {
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 14px;
+  color: #e0e3e9;
+}
