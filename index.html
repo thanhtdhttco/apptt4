@@ -119,7 +119,7 @@ function checkPass() {
     const pass = document.getElementById('pass-input').value;
     const errorMsg = document.getElementById('error-msg');
     
-    if (pass === "123456") { // <<< ĐỔI MẬT KHẨU CỦA BẠN TẠI ĐÂY
+    if (pass === "tt4") { // <<< ĐỔI MẬT KHẨU CỦA BẠN TẠI ĐÂY
         document.getElementById('login-screen').style.display = 'none';
         sessionStorage.setItem('isLoggedIn', 'true');
     } else {
@@ -144,4 +144,5 @@ if (sessionStorage.getItem('isLoggedIn') === 'true') {
     document.getElementById('login-screen').style.display = 'none';
 }
 </script>
+
 
