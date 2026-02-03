@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Theo dõi trạm 35kV</title>
+
+  <link rel="apple-touch-icon" href="icon-180.png">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Theo dõi trạm 35kV">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS DÙNG CHUNG -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- ICON -->
+    <img src="icon-180.png" class="logo" alt="Theo dõi trạm 35kV">
+
+    <!-- TIÊU ĐỀ TRANG -->
+    <h1>
+  Theo dõi trạm 35kV<br>
+  <span class="subtitle">Các sổ sách theo dõi</span>
+</h1>
+
+    <!-- NÚT 1 -->
+    <!-- DẪN GOOGLE FORM -->
+    <a class="btn" href="https://docs.google.com/spreadsheets/d/19SJ__KSyFd52s0j-k6NXOasgyzUCl8OO/edit?usp=drive_link&ouid=115734133024998062279&rtpof=true&sd=true">
+      Biểu đồ điện áp - dòng điện
+    </a>
+
+    <!-- NÚT 2 -->
+    <!-- DẪN GOOGLE SHEET -->
+    <a class="btn" href="https://docs.google.com/spreadsheets/d/1prQCCNGlpWTfuoMKhNJNCVtYPwfv1sIq/edit?usp=drive_link&ouid=115734133024998062279&rtpof=true&sd=true">
+      Nhật ký vận hành trạm 35kV
+    </a>
+    
+<!-- NÚT 3 -->
+    <!-- DẪN GOOGLE SHEET -->
+    <a class="btn" href="https://docs.google.com/spreadsheets/d/1HdxLEh-8E5QGXSv2sKZufYTIxM5GkdqU/edit?usp=drive_link&ouid=115734133024998062279&rtpof=true&sd=true">
+      Theo dõi điện năng, cos phi
+    </a>
+
+    <!-- QUAY LẠI -->
+    <div class="footer">
+      <a href="index.html" style="color:#e0e3e9;">← Quay lại trang chủ</a>
+    </div>
+
+  </div>
+</body>
+</html>
