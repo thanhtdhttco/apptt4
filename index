@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- Khai báo đây là tài liệu HTML5 -->
+
+<html lang="vi">
+<!-- Thẻ gốc của trang web, lang="vi" giúp trình duyệt hiểu nội dung tiếng Việt -->
+
+<head>
+  <!-- ================== PHẦN CẤU HÌNH TRANG ================== -->
+
+  <meta charset="UTF-8">
+  <!-- BẮT BUỘC: Hiển thị đúng tiếng Việt -->
+
+  <title>PX Tuyển than 4</title>
+  <!-- Tên app / tên tab trình duyệt -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- QUAN TRỌNG:
+       - Giúp web tự khớp màn hình điện thoại
+       - Thiếu dòng này → giao diện bị thu nhỏ -->
+
+  <!-- ================== ICON IPHONE ================== -->
+
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <!-- BẮT BUỘC CHO iOS:
+       - Icon hiển thị khi ghim màn hình chính
+       - File phải là PNG 180x180, nền vuông -->
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Cho phép chạy như app khi ghim -->
+
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <!-- Màu thanh trạng thái iOS -->
+
+  <meta name="apple-mobile-web-app-title" content="PX Tuyển than 4">
+  <!-- Tên hiển thị dưới icon iPhone -->
+
+  <!-- ================== PWA CHUNG ================== -->
+
+  <link rel="manifest" href="manifest.json">
+  <!-- Dùng cho Android / Chrome -->
+
+  <!-- ================== CSS ================== -->
+
+  <link rel="stylesheet" href="style.css">
+  <!-- Toàn bộ giao diện nằm trong file này -->
+
+</head>
+
+
+<body>
+  <!-- ================== PHẦN HIỂN THỊ GIAO DIỆN ================== -->
+
+  <div class="app">
+  <!-- .app là khung chính:
+       - Giữ web full màn hình điện thoại
+       - Canh giữa nội dung
+       - Không nên xóa -->
+
+    <img src="icon-180.png" class="logo" alt="Tuyển than 4">
+    <!-- ICON ỨNG DỤNG:
+         - src: đường dẫn tới hình
+         - class="logo": CSS điều khiển kích thước
+         - alt: chữ hiển thị khi ảnh lỗi -->
+
+    <h1>TUYỂN THAN 4</h1>
+    <!-- TIÊU ĐỀ CHÍNH CỦA TRANG
+         - Đổi tên trang → sửa chữ ở đây -->
+
+    <a class="btn" href="https://docs.google.com/spreadsheets/d/16hhLly88z_EzuRP2p956amobINp-A7yp/edit?usp=sharing&ouid=105148111923840710680&rtpof=true&sd=true">
+    <!-- NÚT BẤM THỨ 1:
+         - class="btn": kiểu nút (CSS)
+         - href: link Google Sheet -->
+      Kiến nghị của AT-VSV
+    </a>
+
+    <a class="btn" href="baocao.html">
+    <!-- NÚT BẤM THỨ 2:
+         - Dẫn sang trang web tĩnh khác (baocao.html)
+         - File baocao.html phải nằm cùng thư mục -->
+      Gửi báo cáo kiểm tra đá thải
+    </a>
+
+<a class="btn" href="theodoitram35.html">
+    <!-- NÚT BẤM THỨ 3:
+         - Dẫn sang trang web tĩnh khác (baocao.html)
+         - File baocao.html phải nằm cùng thư mục -->
+      Gửi báo cáo kiểm tra đá thải
+    </a>
+
+    <a class="btn" href="https://www.facebook.com/profile.php?id=100084238725517&locale=vi_VN">
+    <!-- NÚT BẤM THỨ 4:
+         - class="btn": kiểu nút (CSS)
+         - href: link Google Sheet -->
+      Các hoạt động và Truyền thông
+    </a>
+
+    <div class="footer">Version 1.1</div>
+    <!-- PHẦN CUỐI TRANG:
+         - Hiển thị phiên bản
+         - Có thể dùng để ghi ngày cập nhật -->
+  </div>
+
+</body>
+</html>
