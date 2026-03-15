@@ -105,6 +105,52 @@
          - Hiển thị phiên bản
          - Có thể dùng để ghi ngày cập nhật -->
   </div>
+<div id="login-layer" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#e9ecef; z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family:Arial, sans-serif;">
+    <div style="background:white; padding:40px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.15); text-align:center; width:90%; max-width:350px;">
+        <img src="icon-180.png" style="width:60px; margin-bottom:15px;">
+        <h2 style="margin:0 0 10px; color:#212529;">BẠN ĐANG ĐĂNG NHẬP VÀO HỆ THỐNG NỘI BỘ</h2>
+        <p style="color:#6c757d; font-size:14px; margin-bottom:20px;">⚠️PX Tuyển than 4 - Vui lòng nhập mã</p>
+        
+        <input type="password" id="pass-field" placeholder="Mật khẩu..." autofocus
+               style="width:100%; padding:14px; margin-bottom:15px; border:2px solid #dee2e6; border-radius:8px; font-size:18px; box-sizing:border-box; outline:none; text-align:center;">
+        
+        <button onclick="validate()" 
+                style="width:100%; padding:14px; background:#28a745; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; font-size:16px;">
+            ĐĂNG NHẬP (ENTER)
+        </button>
+        
+        <p id="msg" style="color:#dc3545; font-size:14px; margin-top:15px; display:none; font-weight:bold;">⚠️Mật khẩu không chính xác!</p>
+    </div>
+</div>
 
+<script>
+    const PASSWORD_QUY_DINH = "tt4"; // Đổi mật khẩu của bạn tại đây
+
+    const layer = document.getElementById('login-layer');
+    const inputField = document.getElementById('pass-field');
+    const appContent = document.querySelector('.app');
+
+    // Ẩn nội dung chính ngay khi tải trang
+    appContent.style.display = 'none';
+
+    // Hàm kiểm tra mật khẩu
+    function validate() {
+        if(inputField.value === PASSWORD_QUY_DINH) {
+            layer.style.display = 'none'; // Xóa màn hình đăng nhập
+            appContent.style.display = 'block'; // Hiện nội dung app
+        } else {
+            document.getElementById('msg').style.display = 'block';
+            inputField.value = '';
+            inputField.focus();
+        }
+    }
+
+    // Bắt sự kiện nhấn phím Enter trên máy tính
+    inputField.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            validate();
+        }
+    });
+</script>
 </body>
 </html>
