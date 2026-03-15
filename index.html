@@ -105,5 +105,68 @@
          - Hiển thị phiên bản
          - Có thể dùng để ghi ngày cập nhật -->
   </div>
+  <style>
+  /* Lớp phủ kín màn hình, không cho thấy nội dung bên dưới */
+  #man-hinh-khoa {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #f4f4f4; z-index: 100000;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Arial, sans-serif;
+  }
+  .hop-dang-nhap {
+    background: white; padding: 35px; border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center;
+    width: 85%; max-width: 320px;
+  }
+  .hop-dang-nhap img { width: 60px; margin-bottom: 10px; }
+  .hop-dang-nhap input {
+    width: 100%; padding: 14px; margin: 15px 0;
+    border: 2px solid #ddd; border-radius: 8px;
+    font-size: 18px; box-sizing: border-box; outline: none; text-align: center;
+  }
+  .hop-dang-nhap button {
+    width: 100%; padding: 14px; background: #007bff; color: white;
+    border: none; border-radius: 8px; font-weight: bold; cursor: pointer;
+  }
+</style>
+
+<div id="man-hinh-khoa">
+  <div class="hop-dang-nhap">
+    <img src="icon-180.png">
+    <h3 style="margin:0; color:#333;">XÁC THỰC TRUY CẬP</h3>
+    <input type="password" id="ma-pass" placeholder="Nhập mật khẩu..." autofocus>
+    <button onclick="kiemTra()">VÀO PHẦN MỀM (ENTER)</button>
+    <p id="thong-bao-sai" style="color:red; font-size:14px; margin-top:15px; display:none;">Mật khẩu không đúng!</p>
+  </div>
+</div>
+
+<script>
+  // Mật khẩu bác đặt ở đây
+  const PASS_CUA_BAC = "123"; 
+
+  const appGoc = document.querySelector('.app');
+  const lopPhu = document.getElementById('man-hinh-khoa');
+  const oNhap = document.getElementById('ma-pass');
+
+  // 1. NGAY LẬP TỨC ẨN APP GỐC (Bằng cách dùng class tạm thời)
+  appGoc.style.visibility = 'hidden';
+
+  function kiemTra() {
+    if (oNhap.value === PASS_CUA_BAC) {
+      // 2. KHI ĐÚNG: Xóa hẳn lớp bảo mật và hiện app lại y nguyên
+      lopPhu.remove();
+      appGoc.style.visibility = 'visible'; // Trả lời trạng thái hiển thị cũ
+    } else {
+      document.getElementById('thong-bao-sai').style.display = 'block';
+      oNhap.value = '';
+      oNhap.focus();
+    }
+  }
+
+  // 3. Bấm Enter trên máy tính là vào luôn
+  oNhap.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') kiemTra();
+  });
+</script>
 </body>
 </html>
