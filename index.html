@@ -105,82 +105,75 @@
          - Hiển thị phiên bản
          - Có thể dùng để ghi ngày cập nhật -->
   </div>
- <style>
-  /* Lớp phủ kín màn hình - Tone Xanh Navy chuyên nghiệp */
+<style>
+  /* Lớp phủ nền xanh tối để hộp trắng nổi bật */
   #man-hinh-khoa {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: #0a192f; /* Màu xanh đen sâu */
+    background: #0a192f; 
     z-index: 100000;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: Arial, sans-serif;
   }
 
+  /* Hộp đăng nhập Trắng hoàn toàn, sắc nét */
   .hop-dang-nhap {
-    background: white */ Màu nền hộp đậm hơn một chút */
-adding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2); /* Chỉnh lại độ đậm bóng đổ cho nổi trên nền tối */
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 4px; /* Bo góc nhẹ nhìn cứng cáp hơn */
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
     text-align: center;
-    width: 90%;
-    max-width: 380px;
-    border: 1px solid #ddd; /* Sửa viền thành màu xám nhạt cho tinh tế */
+    width: 320px;
+    border-top: 5px solid #007bff; /* Điểm nhấn viền xanh chuyên nghiệp phía trên */
   }
 
-  .hop-dang-nhap img { 
-    width: 70px; 
-    margin-bottom: 15px;
-    filter: drop-shadow(0 0 5px rgba(100, 255, 218, 0.3)); /* Hiệu ứng phát sáng nhẹ cho icon */
-  }
+  .hop-dang-nhap img { width: 60px; margin-bottom: 15px; }
 
+  /* Tiêu đề màu xanh đen đậm */
   .hop-dang-nhap h3 {
-    margin: 0; 
-    color: #101e38; /* SỬA DÒNG NÀY: Đổi sang màu xanh đen đậm để nổi trên nền trắng */
-    letter-spacing: 1px;
+    margin: 0 0 10px 0;
+    color: #1a2a44;
+    font-size: 18px;
     text-transform: uppercase;
   }
 
-  /* Dòng cảnh báo nội bộ */
+  /* Dòng cảnh báo màu đỏ đậm, rõ ràng */
   .canh-bao-noi-bo {
-    color: #ff4d4d; /* Màu đỏ cảnh báo khẩn cấp */
-    font-size: 14px;
+    color: #d32f2f;
+    font-size: 13px;
     font-weight: bold;
-    margin: 15px 0;
-    line-height: 1.5;
+    margin-bottom: 20px;
     text-transform: uppercase;
+    line-height: 1.4;
   }
 
- .hop-dang-nhap input {
-    width: 100%; padding: 15px; margin: 10px 0;
-    background: #f8f9fa; /* Màu xám cực nhạt */
-    color: #333; 
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    /* ... các dòng còn lại giữ nguyên ... */
-}
-
-  .hop-dang-nhap input:focus {
-    border-color: #64ffda; /* Đổi màu viền khi click vào */
+  /* Ô nhập mật khẩu trắng, viền rõ */
+  .hop-dang-nhap input {
+    width: 100%; padding: 12px; margin-bottom: 15px;
+    background: #ffffff;
+    color: #000; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 18px;
+    box-sizing: border-box;
+    outline: none;
+    text-align: center;
   }
 
+  /* Khi click vào ô nhập mật khẩu */
+  .hop-dang-nhap input:focus { border-color: #007bff; }
+
+  /* Nút bấm xanh đậm, không hiệu ứng rườm rà */
   .hop-dang-nhap button {
-    width: 100%; padding: 15px; 
-    background: #64ffda; 
-    color: #0a192f;
-    border: none; border-radius: 8px; 
+    width: 100%; padding: 12px; 
+    background: #007bff; 
+    color: white;
+    border: none; border-radius: 4px; 
     font-weight: bold; cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    transition: transform 0.2s, background 0.2s;
-  }
-
-  .hop-dang-nhap button:hover {
-    background: #52e0c4;
-    transform: translateY(-2px);
+    font-size: 15px;
   }
 
   #thong-bao-sai {
-    color: #ff4d4d; font-size: 14px; margin-top: 15px; display: none;
-    font-style: italic;
+    color: #d32f2f; font-size: 13px; margin-top: 10px; display: none;
   }
 </style>
 
@@ -190,37 +183,32 @@ adding: 40px;
     <h3>XÁC THỰC TRUY CẬP</h3>
     
     <p class="canh-bao-noi-bo">
-      ⚠️ ĐÂY LÀ PHẦN MỀM NỘI BỘ,<br>HÃY ĐĂNG NHẬP MẬT KHẨU ĐỂ SỬ DỤNG.
+      ⚠️ PHẦN MỀM NỘI BỘ<br>YÊU CẦU ĐĂNG NHẬP ĐỂ SỬ DỤNG
     </p>
 
-    <input type="password" id="ma-pass" placeholder="Mật khẩu hệ thống..." autofocus>
-    <button onclick="kiemTra()">VÀO HỆ THỐNG (ENTER)</button>
-    <p id="thong-bao-sai">❌ Mật khẩu không chính xác!</p>
+    <input type="password" id="ma-pass" placeholder="Mật khẩu..." autofocus>
+    <button onclick="kiemTra()">VÀO HỆ THỐNG</button>
+    <p id="thong-bao-sai">❌ Sai mật khẩu!</p>
   </div>
 </div>
 
 <script>
-  // Mật khẩu của bạn
   const PASS_CUA_BAC = "tt4"; 
-
   const appGoc = document.querySelector('.app');
   const lopPhu = document.getElementById('man-hinh-khoa');
   const oNhap = document.getElementById('ma-pass');
 
-  // Ẩn nội dung phía dưới ngay lập tức
+  // Ẩn nội dung ngay lập tức
   if (appGoc) appGoc.style.visibility = 'hidden';
 
   function kiemTra() {
     if (oNhap.value === PASS_CUA_BAC) {
-      lopPhu.style.opacity = '0'; // Hiệu ứng mờ dần
-      lopPhu.style.transition = '0.5s';
-      setTimeout(() => {
-        lopPhu.remove();
-        if (appGoc) appGoc.style.visibility = 'visible';
-      }, 500);
+      // Xóa thẳng, không hiệu ứng để đạt tốc độ cao nhất
+      lopPhu.remove();
+      if (appGoc) appGoc.style.visibility = 'visible';
     } else {
       document.getElementById('thong-bao-sai').style.display = 'block';
-      oNhap.style.borderColor = '#ff4d4d';
+      oNhap.style.border = '1px solid red';
       oNhap.value = '';
       oNhap.focus();
     }
