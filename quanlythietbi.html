@@ -2,47 +2,299 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Quản lý thiết bị tại PX Tuyển than 4</title>
-
-  <link rel="apple-touch-icon" href="icon-180.png">
-
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Quản lý thiết bị tại PX Tuyển than 4">
+  <!-- Hiển thị đúng tiếng Việt -->
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Khớp màn hình điện thoại -->
 
-  <!-- CSS DÙNG CHUNG -->
-  <link rel="stylesheet" href="style.css">
+  <title>Quản lý thiết bị – PX Tuyển than 4</title>
+  <!-- Tên tab trình duyệt -->
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Cho phép chạy như app khi ghim iPhone -->
+
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <!-- Màu thanh trạng thái iOS -->
+
+  <!-- ========== TỐI ƯU TỐC ĐỘ: Bắt tay Google trước khi iframe load ========== -->
+  <link rel="preconnect" href="https://lookerstudio.google.com">
+  <!-- Kết nối sớm tới Looker Studio → giảm ~200-500ms -->
+
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <!-- Kết nối sớm tới Google Tag Manager (Looker Studio dùng ngầm) -->
+
+  <link rel="dns-prefetch" href="https://lookerstudio.google.com">
+  <!-- Phân giải DNS trước → trình duyệt cũ không hỗ trợ preconnect vẫn được hưởng lợi -->
+
+  <style>
+    /* ========== RESET CƠ BẢN ========== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ========== TOÀN TRANG ========== */
+    body {
+      background: #0f172a;       /* Nền xanh đen */
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      height: 100vh;             /* Chiếm đúng 1 màn hình, không cuộn */
+      display: flex;
+      flex-direction: column;    /* Xếp dọc: header → iframe → safe-bottom */
+      overflow: hidden;          /* Không cho trang cuộn, chỉ iframe cuộn */
+    }
+
+    /* ========== THANH TIÊU ĐỀ TRÊN CÙNG ========== */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;  /* 3 phần: nút trái – tiêu đề – nút phải */
+      padding: 10px 16px;
+      background: #1e293b;
+      border-bottom: 2px solid #fbbf24;
+      flex-shrink: 0;
+      padding-top: max(10px, env(safe-area-inset-top));
+      /* ↑ Tránh bị tai thỏ iPhone che mất header */
+    }
+
+    /* ========== NÚT QUAY LẠI ========== */
+    .btn-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #fbbf24;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: rgba(251,191,36,0.1);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-back:active { opacity: 0.7; }
+
+    /* ========== TIÊU ĐỀ GIỮA HEADER ========== */
+    .header-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .header-title span {
+      display: block;
+      font-size: 11px;
+      color: #94a3b8;
+      font-weight: 400;
+    }
+
+    /* ========== NÚT LÀM MỚI ========== */
+    .btn-refresh {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(251,191,36,0.1);
+      border: 1px solid #fbbf24;
+      color: #fbbf24;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-refresh:active { opacity: 0.7; }
+
+    /* ========== HIỆU ỨNG XOAY ICON KHI LÀM MỚI ========== */
+    .spin { display: inline-block; }
+    .loading .spin { animation: xoay 1s linear infinite; }
+    @keyframes xoay { to { transform: rotate(360deg); } }
+
+    /* ========== KHUNG CHỨA IFRAME ========== */
+    .iframe-wrapper {
+      flex: 1;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ========== MÀN HÌNH CHỜ SKELETON ========== */
+    .loading-overlay {
+      position: absolute; /* Phủ lên toàn bộ iframe-wrapper */
+      inset: 0;
+      background: #0f172a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; /* Bắt đầu từ trên xuống như dashboard thật */
+      gap: 16px;
+      padding: 20px 16px;
+      z-index: 10;
+      transition: opacity 0.4s ease;
+    }
+    .loading-overlay.an {
+      opacity: 0;
+      pointer-events: none; /* Khi ẩn → không chặn click vào iframe */
+    }
+
+    /* -- SKELETON: Khối giả lập nội dung đang tải -- */
+    .skeleton {
+      background: linear-gradient(
+        90deg,
+        #1e293b 25%,   /* Màu nền tối */
+        #2d3f55 50%,   /* Màu sáng hơn chạy qua */
+        #1e293b 75%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      /* ↑ Hiệu ứng ánh sáng quét qua liên tục */
+      border-radius: 8px;
+    }
+
+    /* Hiệu ứng ánh sáng quét từ phải sang trái */
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* -- Hàng đầu: 2 thẻ số liệu nhỏ giả lập -- */
+    .sk-row {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+    }
+    .sk-card {
+      flex: 1;
+      height: 80px;  /* Giả lập thẻ KPI */
+      border-radius: 10px;
+    }
+
+    /* -- Biểu đồ tròn giả lập -- */
+    .sk-chart {
+      width: 100%;
+      height: 180px;
+    }
+
+    /* -- Bảng dữ liệu giả lập -- */
+    .sk-table-row {
+      width: 100%;
+      height: 36px;  /* Mỗi dòng bảng */
+      border-radius: 6px;
+    }
+    /* Dòng đầu bảng ngắn hơn một chút trông tự nhiên */
+    .sk-table-row:nth-child(2) { width: 90%; }
+    .sk-table-row:nth-child(3) { width: 95%; }
+    .sk-table-row:nth-child(4) { width: 85%; }
+
+    /* Chữ "Đang tải..." phía dưới skeleton */
+    .sk-text {
+      color: #475569;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    /* ========== IFRAME LOOKER STUDIO ========== */
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ========== KHOẢNG TRỐNG DƯỚI CÙNG (HOME BAR IPHONE) ========== */
+    .safe-bottom {
+      height: env(safe-area-inset-bottom);
+      background: #1e293b;
+      flex-shrink: 0;
+    }
+  </style>
 </head>
-
 <body>
-  <div class="app">
 
-    <!-- ICON -->
-    <img src="icon-180.png" class="logo" alt="Quản lý thiết bị tại PX Tuyển than 4">
+  <!-- THANH TIÊU ĐỀ -->
+  <div class="header">
 
-    <!-- TIÊU ĐỀ TRANG -->
-    <h1>
-  Quản lý thiết bị tại PX Tuyển than 4<br>
-  <span class="subtitle">Các báo cáo</span>
-</h1>
+    <!-- NÚT QUAY VỀ TRANG CHỦ -->
+    <a class="btn-back" href="index.html">← Quay lại</a>
 
-    <!-- NÚT 1 -->
-    <!-- DẪN GOOGLE FORM -->
-    <a class="btn" href="https://lookerstudio.google.com/reporting/2fa9415a-3a55-40fe-aa57-f8b7d91fc2e6">
-      Tình trạng hoạt động các thiết bị
-    </a>
-
-    
-
-    <!-- QUAY LẠI -->
-    <div class="footer">
-      <a href="index.html" style="color:#e0e3e9;">← Quay lại trang chủ</a>
+    <!-- TÊN TRANG -->
+    <div class="header-title">
+      Quản lý thiết bị
+      <span>PX Tuyển than 4</span>
     </div>
 
+    <!-- NÚT LÀM MỚI DỮ LIỆU -->
+    <button class="btn-refresh" id="btnRefresh" onclick="laMoi()">
+      <span class="spin">🔄</span> Mới
+    </button>
+
   </div>
+
+  <!-- VÙNG CHỨA LOOKER STUDIO -->
+  <div class="iframe-wrapper">
+
+    <!-- MÀN HÌNH CHỜ SKELETON
+         Hiển thị bộ khung giả giống dashboard thật
+         → người dùng cảm giác trang tải nhanh hơn dù tốc độ thật không đổi
+         Tự ẩn khi iframe load xong -->
+    <div class="loading-overlay" id="loading">
+
+      <!-- Hàng 2 thẻ số liệu giả -->
+      <div class="sk-row">
+        <div class="skeleton sk-card"></div>
+        <div class="skeleton sk-card"></div>
+      </div>
+
+      <!-- Biểu đồ tròn giả -->
+      <div class="skeleton sk-chart"></div>
+
+      <!-- Các dòng bảng giả -->
+      <div class="skeleton sk-table-row"></div>
+      <div class="skeleton sk-table-row"></div>
+      <div class="skeleton sk-table-row"></div>
+      <div class="skeleton sk-table-row"></div>
+
+      <p class="sk-text">Đang tải dữ liệu...</p>
+    </div>
+
+    <!-- IFRAME NHÚNG LOOKER STUDIO
+         - loading="lazy": chỉ tải khi người dùng thật sự vào trang
+         - onload: gọi hàm ẩn skeleton khi tải xong
+         - sandbox: quyền cần thiết để Looker Studio hoạt động -->
+    <iframe
+      id="khung-bao-cao"
+      src="https://lookerstudio.google.com/embed/reporting/2fa9415a-3a55-40fe-aa57-f8b7d91fc2e6/page/p_r9ce9gmt1d"
+      frameborder="0"
+      style="border:0"
+      allowfullscreen
+      loading="lazy"
+      sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+      onload="khuatLoading()">
+    </iframe>
+
+  </div>
+
+  <!-- KHOẢNG TRỐNG TRÁNH HOME BAR IPHONE -->
+  <div class="safe-bottom"></div>
+
+  <script>
+    // Ẩn skeleton khi iframe tải xong
+    function khuatLoading() {
+      document.getElementById('loading').classList.add('an');
+      // Thêm class "an" → CSS làm mờ dần và vô hiệu hóa overlay
+    }
+
+    // Hàm làm mới dữ liệu khi bấm nút 🔄
+    function laMoi() {
+      const btn = document.getElementById('btnRefresh');
+      const khung = document.getElementById('khung-bao-cao');
+      const loading = document.getElementById('loading');
+
+      loading.classList.remove('an'); // Hiện lại skeleton
+      btn.classList.add('loading');   // Bật hiệu ứng xoay icon
+      khung.src = khung.src;          // Reload iframe bằng cách gán lại src
+
+      // Tắt hiệu ứng xoay sau 2 giây
+      setTimeout(() => btn.classList.remove('loading'), 2000);
+    }
+  </script>
+
 </body>
 </html>
